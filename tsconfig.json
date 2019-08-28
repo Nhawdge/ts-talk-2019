@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "none",
+    "allowJs": true,
+    "checkJs": true,
+    "sourceMap": true,
+    "outFile": "bundle.js",
+    "outDir": "./build",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "./src"
+  ]
+}

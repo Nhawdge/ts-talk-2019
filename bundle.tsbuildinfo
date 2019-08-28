@@ -1,0 +1,19 @@
+{
+  "bundle": {
+    "commonSourceDirectory": "C:/code/TypeScriptTalk/src/",
+    "sourceFiles": [
+      "C:/code/TypeScriptTalk/src/index.ts"
+    ],
+    "js": {
+      "sections": [
+        {
+          "pos": 0,
+          "end": 13,
+          "kind": "prologue",
+          "data": "use strict"
+        }
+      ]
+    }
+  },
+  "version": "3.5.3"
+}
