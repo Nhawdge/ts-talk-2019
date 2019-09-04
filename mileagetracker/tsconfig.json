@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "none",
+      "allowJs": true,
+      "checkJs": true,
+      "sourceMap": true,
+      "outFile": "milage.js",
+      //"outDir": "./build",
+      "rootDir": "./",
+      "strict": true,
+      "esModuleInterop": true
+    },
+    "include": [
+      "./*.ts"
+    ]
+  }

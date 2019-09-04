@@ -1,0 +1,31 @@
+body {
+    width: 1000px;
+    margin: auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+header{
+    width: 100%;
+    margin:auto;
+    text-align: center;
+    color: rgba(0, 0, 0, .7);
+
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+section {
+    grid-column: auto;    
+}
+
+form {
+    display: grid;
+    grid-template-rows: 1fr;
+}
+form > * {
+    width: 60%;
+    margin: 0px;
+    padding: 7px 0px;
+}
