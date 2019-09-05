@@ -1,5 +1,5 @@
-# Converting your project to Typescript
-A guide to converting your project
+# ~~Converting your project to~~ Typescript
+A Introduction to Typescript
 
 ## Table of contents 
 * TypeScript.. Why

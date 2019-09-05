@@ -1,3 +1,35 @@
+class FormField {
+    Name: string;
+    Type: any;
+    Value: any;
+    Attributes: Array<[string, string]>;
+
+    /**
+     * This is form field 
+     */
+    constructor(input: any) {
+        this.Name = input.Name;
+        this.Type = input.Type;
+        this.Value = input.Value || 0;
+        this.Attributes = input.Attributes
+    }
+
+    Render(): HTMLElement {
+        let group = document.createElement('fieldset') as HTMLFieldSetElement;
+        let labelElem = document.createElement('label');
+        labelElem.innerHTML = this.Name;
+
+        let inputElem = document.createElement('input');
+        inputElem.type = this.Type.toString();
+        inputElem.name = this.Name;
+        inputElem.value = ""
+
+        //labelElem.innerText = input;
+        group.appendChild(labelElem)
+        group.appendChild(inputElem)
+        return group;
+    }
+}
 
 class Entry {
     Mileage = 0;
@@ -8,14 +40,20 @@ class Entry {
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
 
-        var inputs = ['Mileage', 'Date', 'Fuel', 'TotalCost'];
+        var inputs = [new FormField({
+            Name: "Mileage",
+            Type: Number,
+            Value: 0,
+            Attributes: ["type", "number"]
+        })];
 
         for (let input of inputs) {
             let inputElem = document.createElement('input');
             inputElem.type = "number";
+            //inputElem.value =
 
             let labelElem = document.createElement('label');
-            labelElem.innerText = input;
+            //labelElem.innerText = input;
 
             form.appendChild(labelElem);
             form.appendChild(inputElem);
