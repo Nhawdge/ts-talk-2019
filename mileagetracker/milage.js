@@ -14,9 +14,10 @@ var FormField = /** @class */ (function () {
         var labelElem = document.createElement('label');
         labelElem.innerHTML = this.Name;
         var inputElem = document.createElement('input');
-        inputElem.type = this.Type.toString();
+        inputElem.type = this.Type;
         inputElem.name = this.Name;
-        inputElem.value = "";
+        inputElem.value = this.Value;
+        this.Attributes.forEach(function (x) { return inputElem.setAttribute(x[0], x[1]); });
         //labelElem.innerText = input;
         group.appendChild(labelElem);
         group.appendChild(inputElem);
@@ -33,21 +34,35 @@ var Entry = /** @class */ (function () {
     }
     Entry.prototype.Render = function () {
         var form = document.createElement("form");
-        var inputs = [new FormField({
+        var inputs = [
+            new FormField({
                 Name: "Mileage",
-                Type: Number,
-                Value: 0,
-                Attributes: ["type", "number"]
-            })];
+                Type: "number",
+                Value: null,
+                Attributes: [["placeholder", "Total current milage"]]
+            }),
+            new FormField({
+                Name: "Date",
+                Type: "date",
+                Value: new Date(),
+                Attributes: [["placeholder", "Date Done"]]
+            }),
+            new FormField({
+                Name: "Fuel",
+                Type: "number",
+                Value: '',
+                Attributes: [["placeholder", "Fuel in Gallons"]]
+            }),
+            new FormField({
+                Name: "Cost",
+                Type: "number",
+                Value: "",
+                Attributes: [["placeholder", "Cost in Dollars"]]
+            }),
+        ];
         for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
             var input = inputs_1[_i];
-            var inputElem = document.createElement('input');
-            inputElem.type = "number";
-            //inputElem.value =
-            var labelElem = document.createElement('label');
-            //labelElem.innerText = input;
-            form.appendChild(labelElem);
-            form.appendChild(inputElem);
+            form.appendChild(input.Render());
         }
         return form;
     };

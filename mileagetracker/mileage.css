@@ -20,11 +20,12 @@ section {
     grid-column: auto;    
 }
 
-form {
+form fieldset{
     display: grid;
     grid-template-rows: 1fr;
+    border: none;
 }
-form > * {
+form fieldset > *{
     width: 60%;
     margin: 0px;
     padding: 7px 0px;

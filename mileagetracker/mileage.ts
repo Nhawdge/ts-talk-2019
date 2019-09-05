@@ -1,6 +1,6 @@
 class FormField {
     Name: string;
-    Type: any;
+    Type: string;
     Value: any;
     Attributes: Array<[string, string]>;
 
@@ -20,9 +20,11 @@ class FormField {
         labelElem.innerHTML = this.Name;
 
         let inputElem = document.createElement('input');
-        inputElem.type = this.Type.toString();
+        inputElem.type = this.Type;
         inputElem.name = this.Name;
-        inputElem.value = ""
+        inputElem.value = this.Value;
+
+        this.Attributes.forEach(x => inputElem.setAttribute(x[0], x[1]));
 
         //labelElem.innerText = input;
         group.appendChild(labelElem)
@@ -40,23 +42,35 @@ class Entry {
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
 
-        var inputs = [new FormField({
-            Name: "Mileage",
-            Type: Number,
-            Value: 0,
-            Attributes: ["type", "number"]
-        })];
+        var inputs = [
+            new FormField({
+                Name: "Mileage",
+                Type: "number",
+                Value: null,    
+                Attributes: [["placeholder", "Total current milage"]]
+            }),
+            new FormField({
+                Name: "Date",
+                Type: "date",
+                Value: new Date(),
+                Attributes: [["placeholder", "Date Done"]]
+            }),
+            new FormField({
+                Name: "Fuel",
+                Type: "number",
+                Value: '',
+                Attributes: [["placeholder", "Fuel in Gallons"]]
+            }),
+            new FormField({
+                Name: "Cost",
+                Type: "number",
+                Value: "",
+                Attributes: [["placeholder", "Cost in Dollars"]]
+            }),
+        ];
 
         for (let input of inputs) {
-            let inputElem = document.createElement('input');
-            inputElem.type = "number";
-            //inputElem.value =
-
-            let labelElem = document.createElement('label');
-            //labelElem.innerText = input;
-
-            form.appendChild(labelElem);
-            form.appendChild(inputElem);
+            form.appendChild(input.Render());
         }
 
         return form;
