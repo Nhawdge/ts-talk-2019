@@ -12,7 +12,8 @@ var Entry = /** @class */ (function () {
             new NumberFormField("Mileage", "Total mileage"),
             new DateFormField("Date", "Purchase Date"),
             new NumberFormField("Fuel", "Fuel In Gallons"),
-            new NumberFormField("Cost", "Total cost in USD")
+            new NumberFormField("Cost", "Total cost in USD"),
+            new SubmitFormField("Submit")
         ];
         for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
             var input = inputs_1[_i];
@@ -49,6 +50,7 @@ var FormField = /** @class */ (function () {
      * This is form field
      */
     function FormField(input) {
+        this.HasLabel = true;
         this.Name = input.Name;
         this.Type = input.Type;
         this.Value = input.Value || 0;
@@ -56,17 +58,18 @@ var FormField = /** @class */ (function () {
     }
     FormField.prototype.Render = function () {
         var group = document.createElement('fieldset');
-        var labelElem = document.createElement('label');
-        labelElem.innerHTML = this.Name;
+        if (this.HasLabel) {
+            var labelElem = document.createElement('label');
+            labelElem.innerHTML = this.Name;
+            group.appendChild(labelElem);
+        }
         var inputElem = document.createElement('input');
-        //inputElem.type = this.Type;
+        inputElem.type = this.Type;
         inputElem.name = this.Name;
         if (this.Value) {
             inputElem.value = this.Value;
         }
         this.Attributes.forEach(function (x) { return inputElem.setAttribute(x[0], x[1]); });
-        //labelElem.innerText = input;
-        group.appendChild(labelElem);
         group.appendChild(inputElem);
         return group;
     };
@@ -101,23 +104,47 @@ var DateFormField = /** @class */ (function (_super) {
     /**
      *Form field for Date types
      */
-    function DateFormField(name, placeholder, value, attributes) {
+    function DateFormField(name, placeholder, date, attributes) {
         if (placeholder === void 0) { placeholder = ""; }
-        if (value === void 0) { value = new Date(); }
+        if (date === void 0) { date = new Date(); }
         if (attributes === void 0) { attributes = new Array(); }
         var _this = this;
         if (placeholder) {
             attributes.push(["placeholder", placeholder]);
         }
+        var dateFormatter = new Intl.DateTimeFormat();
         var properties = {
             Name: name,
             Type: "date",
-            Value: new Date(),
+            Value: dateFormatter.format(date),
             Attributes: attributes
         };
         _this = _super.call(this, properties) || this;
         return _this;
     }
     return DateFormField;
+}(FormField));
+var SubmitFormField = /** @class */ (function (_super) {
+    __extends(SubmitFormField, _super);
+    /**
+     * Submit button
+     */
+    function SubmitFormField(name, attributes) {
+        if (attributes === void 0) { attributes = new Array(); }
+        var _this = this;
+        // if (placeholder) {
+        //     attributes.push(["placeholder", placeholder])
+        // }
+        var properties = {
+            Name: name,
+            Type: "submit",
+            Value: null,
+            Attributes: attributes
+        };
+        _this = _super.call(this, properties) || this;
+        _this.HasLabel = false;
+        return _this;
+    }
+    return SubmitFormField;
 }(FormField));
 //# sourceMappingURL=milage.js.map

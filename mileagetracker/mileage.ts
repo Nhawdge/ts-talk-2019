@@ -6,12 +6,13 @@ class Entry {
 
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
-
+        
         var inputs = [
             new NumberFormField("Mileage", "Total mileage"),
             new DateFormField("Date", "Purchase Date"),
             new NumberFormField("Fuel", "Fuel In Gallons"),
-            new NumberFormField("Cost", "Total cost in USD")
+            new NumberFormField("Cost", "Total cost in USD"),
+            new SubmitFormField("Submit")
         ];
 
         for (let input of inputs) {
@@ -19,7 +20,6 @@ class Entry {
         }
 
         return form;
-
     }
 }
 
