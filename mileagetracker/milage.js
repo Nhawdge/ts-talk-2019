@@ -1,30 +1,4 @@
 "use strict";
-var FormField = /** @class */ (function () {
-    /**
-     * This is form field
-     */
-    function FormField(input) {
-        this.Name = input.Name;
-        this.Type = input.Type;
-        this.Value = input.Value || 0;
-        this.Attributes = input.Attributes;
-    }
-    FormField.prototype.Render = function () {
-        var group = document.createElement('fieldset');
-        var labelElem = document.createElement('label');
-        labelElem.innerHTML = this.Name;
-        var inputElem = document.createElement('input');
-        inputElem.type = this.Type;
-        inputElem.name = this.Name;
-        inputElem.value = this.Value;
-        this.Attributes.forEach(function (x) { return inputElem.setAttribute(x[0], x[1]); });
-        //labelElem.innerText = input;
-        group.appendChild(labelElem);
-        group.appendChild(inputElem);
-        return group;
-    };
-    return FormField;
-}());
 var Entry = /** @class */ (function () {
     function Entry() {
         this.Mileage = 0;
@@ -77,4 +51,32 @@ function Start() {
     // Generate new report
 }
 document.addEventListener("DOMContentLoaded", Start);
+var FormField = /** @class */ (function () {
+    /**
+     * This is form field
+     */
+    function FormField(input) {
+        this.Name = input.Name;
+        this.Type = input.Type;
+        this.Value = input.Value || 0;
+        this.Attributes = input.Attributes;
+    }
+    FormField.prototype.Render = function () {
+        var group = document.createElement('fieldset');
+        var labelElem = document.createElement('label');
+        labelElem.innerHTML = this.Name;
+        var inputElem = document.createElement('input');
+        //inputElem.type = this.Type;
+        inputElem.name = this.Name;
+        if (this.Value) {
+            inputElem.value = this.Value;
+        }
+        this.Attributes.forEach(function (x) { return inputElem.setAttribute(x[0], x[1]); });
+        //labelElem.innerText = input;
+        group.appendChild(labelElem);
+        group.appendChild(inputElem);
+        return group;
+    };
+    return FormField;
+}());
 //# sourceMappingURL=milage.js.map
