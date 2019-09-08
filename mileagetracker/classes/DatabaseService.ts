@@ -14,10 +14,9 @@ class Database {
         }
         return db;
     }
-    static Save(toAdd: any): boolean {
+    static Save(toAdd: any): void {
         var db = this.OpenDB();
         db.onsuccess = function () {
-
             var transaction = db.result.transaction(["Mileage"], "readwrite");
 
             var objectStore = transaction.objectStore("Mileage");
@@ -25,9 +24,14 @@ class Database {
             var request = objectStore.add(toAdd);
             request.onsuccess = function (event: Event) {
                 console.log("Save successful");
+                return true;
+            }
+            request.onerror = function () {
+                console.log("Save failed");
+                return false;
             }
         }
-        return false;
+
     }
     static Get(): object {
         var db = this.OpenDB();

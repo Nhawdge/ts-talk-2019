@@ -1,38 +1,44 @@
 "use strict";
 var Entry = /** @class */ (function () {
     function Entry() {
+        var _this = this;
         this.Mileage = 0;
         this.Date = new Date();
         this.Fuel = 0;
         this.TotalCost = 0;
-    }
-    Entry.prototype.Render = function () {
-        var form = document.createElement("form");
-        var inputs = [
+        this.Inputs = [
             new NumberFormField("Mileage", "Total mileage"),
             new DateFormField("Date", "Purchase Date"),
             new NumberFormField("Fuel", "Fuel In Gallons"),
             new NumberFormField("Cost", "Total cost in USD"),
             new SubmitFormField("Submit")
         ];
-        for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
-            var input = inputs_1[_i];
+        this.FormSubmit = function (e) {
+            e.preventDefault();
+            var a = _this.GetFormValues();
+            Database.Save(a);
+            return false;
+        };
+    }
+    Entry.prototype.Render = function () {
+        var form = document.createElement("form");
+        for (var _i = 0, _a = this.Inputs; _i < _a.length; _i++) {
+            var input = _a[_i];
             form.appendChild(input.Render());
         }
         form.onsubmit = this.FormSubmit;
         return form;
     };
-    Entry.prototype.FormSubmit = function (e) {
-        e.preventDefault();
-        e.target;
-        var toAdd = {
-            Date: "9/6/19",
-            Fuel: 11,
-            Mileage: 12,
-            TotalCost: 13
-        };
-        Database.Save(toAdd);
-        return false;
+    Entry.prototype.GetFormValues = function () {
+        // var inputs = (e.target as HTMLFormElement).querySelectorAll("input:not([type=submit])") as NodeListOf<HTMLInputElement>;
+        // var inputArray = [].slice.call(inputs);
+        // var obj = inputArray.reduce((a, c: HTMLInputElement) => a = c.value, {});
+        // console.log(obj);
+        var obj = this.Inputs
+            .map(function (x) { return { Name: x.Name, Value: x.Value }; })
+            .reduce(function (a, c) { a[c.Name] = c.Value; return a; }, {});
+        console.log('Got values', obj);
+        return obj;
     };
     return Entry;
 }());
@@ -69,9 +75,13 @@ var Database = /** @class */ (function () {
             var request = objectStore.add(toAdd);
             request.onsuccess = function (event) {
                 console.log("Save successful");
+                return true;
+            };
+            request.onerror = function () {
+                console.log("Save failed");
+                return false;
             };
         };
-        return false;
     };
     Database.Get = function () {
         var db = this.OpenDB();
@@ -107,6 +117,9 @@ var FormField = /** @class */ (function () {
         this.Value = input.Value || 0;
         this.Attributes = input.Attributes;
     }
+    FormField.prototype.Bind = function (e) {
+        this.Value = e.target.value;
+    };
     FormField.prototype.Render = function () {
         var group = document.createElement('fieldset');
         if (this.HasLabel) {
@@ -120,6 +133,7 @@ var FormField = /** @class */ (function () {
         if (this.Value) {
             inputElem.value = this.Value;
         }
+        inputElem.onchange = this.Bind;
         this.Attributes.forEach(function (x) { return inputElem.setAttribute(x[0], x[1]); });
         group.appendChild(inputElem);
         return group;

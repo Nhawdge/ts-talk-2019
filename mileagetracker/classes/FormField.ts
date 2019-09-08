@@ -15,6 +15,10 @@ abstract class FormField {
         this.Attributes = input.Attributes
     }
 
+    Bind(e: Event) {
+        this.Value = (e.target as HTMLInputElement).value;
+    }
+
     Render(): HTMLElement {
         let group = document.createElement('fieldset') as HTMLFieldSetElement;
         if (this.HasLabel) {
@@ -29,7 +33,7 @@ abstract class FormField {
         if (this.Value) {
             inputElem.value = this.Value;
         }
-
+        inputElem.onchange = this.Bind;
         this.Attributes.forEach(x => inputElem.setAttribute(x[0], x[1]));
 
         group.appendChild(inputElem);

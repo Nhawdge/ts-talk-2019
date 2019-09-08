@@ -3,37 +3,45 @@ class Entry {
     Date = new Date();
     Fuel = 0;
     TotalCost = 0;
+    Inputs = [
+        new NumberFormField("Mileage", "Total mileage"),
+        new DateFormField("Date", "Purchase Date"),
+        new NumberFormField("Fuel", "Fuel In Gallons"),
+        new NumberFormField("Cost", "Total cost in USD"),
+        new SubmitFormField("Submit")
+    ];
 
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
 
-        var inputs = [
-            new NumberFormField("Mileage", "Total mileage"),
-            new DateFormField("Date", "Purchase Date"),
-            new NumberFormField("Fuel", "Fuel In Gallons"),
-            new NumberFormField("Cost", "Total cost in USD"),
-            new SubmitFormField("Submit")
-        ];
-
-        for (let input of inputs) {
+        for (let input of this.Inputs) {
             form.appendChild(input.Render());
         }
         form.onsubmit = this.FormSubmit;
-        
 
         return form;
     }
 
-    FormSubmit(e:Event): boolean {
+    GetFormValues(): object {
+        // var inputs = (e.target as HTMLFormElement).querySelectorAll("input:not([type=submit])") as NodeListOf<HTMLInputElement>;
+        // var inputArray = [].slice.call(inputs);
+        // var obj = inputArray.reduce((a, c: HTMLInputElement) => a = c.value, {});
+        // console.log(obj);
+        var obj = this.Inputs
+            .map(x => { return { Name: x.Name, Value: x.Value } })
+            .reduce((a: any, c) => { a[c.Name] = c.Value; return a; }, {})
+        console.log('Got values', obj)
+        return obj
+    }
+
+
+    FormSubmit = (e: Event): boolean => {
         e.preventDefault();
-        e.target;
-        var toAdd = {
-            Date: "9/6/19",
-            Fuel: 11,
-            Mileage: 12,
-            TotalCost: 13
-        };
-        Database.Save(toAdd);
+        var a = this.GetFormValues();
+
+
+
+        Database.Save(a);
         return false;
     }
 }
