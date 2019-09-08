@@ -19,7 +19,13 @@ var Entry = /** @class */ (function () {
             var input = inputs_1[_i];
             form.appendChild(input.Render());
         }
+        form.onsubmit = this.FormSubmit;
         return form;
+    };
+    Entry.prototype.FormSubmit = function (e) {
+        e.preventDefault();
+        Database.Get();
+        return false;
     };
     return Entry;
 }());
@@ -32,6 +38,43 @@ function Start() {
     // Generate new report
 }
 document.addEventListener("DOMContentLoaded", Start);
+var Database = /** @class */ (function () {
+    function Database() {
+    }
+    Database.Save = function () {
+        return false;
+    };
+    Database.Get = function () {
+        var db = window.indexedDB.open("Mileage");
+        db.onsuccess = function (event) {
+            var db = event.target.result;
+            //console.log(event);
+            //console.log(db.result);
+            var transaction = db.transaction(["Mileage"], "readwrite");
+            transaction.oncomplete = function (evt) {
+                console.log("Transaction Complete");
+            };
+            var objectStore = transaction.objectStore("Mileage");
+            var request = objectStore.add("100", "Mileage");
+            request.onsuccess = function (event) {
+                console.log("request successful");
+            };
+        };
+        db.onupgradeneeded = function (event) {
+            var db = event.target.result;
+            console.log("db", db);
+            var mileageEntry = db.createObjectStore("Mileage");
+            mileageEntry.createIndex("Date", "Date");
+            mileageEntry.add("Mileage", "Mileage");
+            mileageEntry.add("Date", "Date");
+            mileageEntry.add("Fuel", "Fuel");
+            mileageEntry.add("TotalCost", "TotalCost");
+        };
+        //db.results
+        return {};
+    };
+    return Database;
+}());
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -47,7 +90,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var FormField = /** @class */ (function () {
     /**
-     * This is form field
+     * This is an abstract form field
      */
     function FormField(input) {
         this.HasLabel = true;

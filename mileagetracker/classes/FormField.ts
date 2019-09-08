@@ -6,7 +6,7 @@ abstract class FormField {
     HasLabel = true;
 
     /**
-     * This is form field  
+     * This is an abstract form field  
      */
     constructor(input: any) {
         this.Name = input.Name;

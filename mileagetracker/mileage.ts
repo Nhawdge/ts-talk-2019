@@ -6,7 +6,7 @@ class Entry {
 
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
-        
+
         var inputs = [
             new NumberFormField("Mileage", "Total mileage"),
             new DateFormField("Date", "Purchase Date"),
@@ -18,8 +18,16 @@ class Entry {
         for (let input of inputs) {
             form.appendChild(input.Render());
         }
+        form.onsubmit = this.FormSubmit;
+        
 
         return form;
+    }
+
+    FormSubmit(e:Event): boolean {
+        e.preventDefault();
+        Database.Get();
+        return false;
     }
 }
 

@@ -1,31 +1,50 @@
 body {
-    width: 1000px;
-    margin: auto;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
-header{
+
+header {
     width: 100%;
-    margin:auto;
+    margin: auto;
     text-align: center;
     color: rgba(0, 0, 0, .7);
 }
 
-main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+@media screen and (min-width: 1000px) {
+    body {
+        margin: auto;
+        width: 1000px;
+    }
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    form fieldset>* {
+        width: 60%;
+        margin: 0px;
+        padding: 7px 0px;
+    }
+}
+
+@media screen and (max-width: 999px) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin: 10px auto;
+        width: 100%;
+    }
+    form fieldset>* {
+        width: 100%;
+        margin: 0px;
+        padding: 7px 0px;
+    }
 }
 
 section {
-    grid-column: auto;    
+    grid-column: auto;
 }
 
-form fieldset{
+form fieldset {
     display: grid;
     grid-template-rows: 1fr;
     border: none;
-}
-form fieldset > *{
-    width: 60%;
-    margin: 0px;
-    padding: 7px 0px;
 }
