@@ -26,7 +26,14 @@ class Entry {
 
     FormSubmit(e:Event): boolean {
         e.preventDefault();
-        Database.Get();
+        e.target;
+        var toAdd = {
+            Date: "9/6/19",
+            Fuel: 11,
+            Mileage: 12,
+            TotalCost: 13
+        };
+        Database.Save(toAdd);
         return false;
     }
 }

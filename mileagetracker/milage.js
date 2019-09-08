@@ -24,7 +24,14 @@ var Entry = /** @class */ (function () {
     };
     Entry.prototype.FormSubmit = function (e) {
         e.preventDefault();
-        Database.Get();
+        e.target;
+        var toAdd = {
+            Date: "9/6/19",
+            Fuel: 11,
+            Mileage: 12,
+            TotalCost: 13
+        };
+        Database.Save(toAdd);
         return false;
     };
     return Entry;
@@ -41,34 +48,35 @@ document.addEventListener("DOMContentLoaded", Start);
 var Database = /** @class */ (function () {
     function Database() {
     }
-    Database.Save = function () {
+    Database.OpenDB = function () {
+        var db = window.indexedDB.open("mileage-tracker");
+        db.onupgradeneeded = function (event) {
+            var db = event.target.result;
+            console.log("Generating DB", db);
+            var mileageEntry = db.createObjectStore("Mileage", { keyPath: 'entryId', autoIncrement: true });
+            mileageEntry.createIndex("Mileage", "");
+            mileageEntry.createIndex("Date", "");
+            mileageEntry.createIndex("Fuel", "");
+            mileageEntry.createIndex("TotalCost", "");
+        };
+        return db;
+    };
+    Database.Save = function (toAdd) {
+        var db = this.OpenDB();
+        db.onsuccess = function () {
+            var transaction = db.result.transaction(["Mileage"], "readwrite");
+            var objectStore = transaction.objectStore("Mileage");
+            var request = objectStore.add(toAdd);
+            request.onsuccess = function (event) {
+                console.log("Save successful");
+            };
+        };
         return false;
     };
     Database.Get = function () {
-        var db = window.indexedDB.open("Mileage");
+        var db = this.OpenDB();
         db.onsuccess = function (event) {
-            var db = event.target.result;
-            //console.log(event);
-            //console.log(db.result);
-            var transaction = db.transaction(["Mileage"], "readwrite");
-            transaction.oncomplete = function (evt) {
-                console.log("Transaction Complete");
-            };
-            var objectStore = transaction.objectStore("Mileage");
-            var request = objectStore.add("100", "Mileage");
-            request.onsuccess = function (event) {
-                console.log("request successful");
-            };
-        };
-        db.onupgradeneeded = function (event) {
-            var db = event.target.result;
-            console.log("db", db);
-            var mileageEntry = db.createObjectStore("Mileage");
-            mileageEntry.createIndex("Date", "Date");
-            mileageEntry.add("Mileage", "Mileage");
-            mileageEntry.add("Date", "Date");
-            mileageEntry.add("Fuel", "Fuel");
-            mileageEntry.add("TotalCost", "TotalCost");
+            //(db.transaction as IDBTransaction).objectStore("Milage");
         };
         //db.results
         return {};
