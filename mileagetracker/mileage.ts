@@ -8,30 +8,10 @@ class Entry {
         var form = document.createElement("form") as HTMLFormElement;
 
         var inputs = [
-            new FormField({
-                Name: "Mileage",
-                Type: "number",
-                Value: null,
-                Attributes: [["placeholder", "Total current milage"]]
-            }),
-            new FormField({
-                Name: "Date",
-                Type: "date",
-                Value: new Date(),
-                Attributes: [["placeholder", "Date Done"]]
-            }),
-            new FormField({
-                Name: "Fuel",
-                Type: "number",
-                Value: '',
-                Attributes: [["placeholder", "Fuel in Gallons"]]
-            }),
-            new FormField({
-                Name: "Cost",
-                Type: "number",
-                Value: "",
-                Attributes: [["placeholder", "Cost in Dollars"]]
-            }),
+            new NumberFormField("Mileage", "Total mileage"),
+            new DateFormField("Date", "Purchase Date"),
+            new NumberFormField("Fuel", "Fuel In Gallons"),
+            new NumberFormField("Cost", "Total cost in USD")
         ];
 
         for (let input of inputs) {

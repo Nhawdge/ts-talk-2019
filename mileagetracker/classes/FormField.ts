@@ -1,4 +1,4 @@
-class FormField {
+abstract class FormField {
     Name: string;
     Type: string;
     Value: any;
@@ -33,4 +33,42 @@ class FormField {
         group.appendChild(inputElem)
         return group;
     }
+}
+
+
+class NumberFormField extends FormField {
+    /**
+     * Form field for number type
+     */
+    constructor(name: string, placeholder: string = "", value: number = 0, attributes: Array<[string, string]> = new Array<[string, string]>()) {
+        if (placeholder) {
+            attributes.push(["placeholder", placeholder])
+        }
+        var properties = {
+            Name: name,
+            Type: "number",
+            Value: value,
+            Attributes: attributes
+        }
+        super(properties);
+    }
+}
+
+class DateFormField extends FormField {
+    /**
+     *Form field for Date types
+     */
+    constructor(name: string, placeholder: string = "", value: Date = new Date(), attributes: Array<[string, string]> = new Array<[string, string]>()) {
+        if (placeholder) {
+            attributes.push(["placeholder", placeholder])
+        }
+        var properties = {
+            Name: name,
+            Type: "date",
+            Value: new Date(),
+            Attributes: attributes
+        }
+        super(properties);
+    }
+
 }

@@ -9,30 +9,10 @@ var Entry = /** @class */ (function () {
     Entry.prototype.Render = function () {
         var form = document.createElement("form");
         var inputs = [
-            new FormField({
-                Name: "Mileage",
-                Type: "number",
-                Value: null,
-                Attributes: [["placeholder", "Total current milage"]]
-            }),
-            new FormField({
-                Name: "Date",
-                Type: "date",
-                Value: new Date(),
-                Attributes: [["placeholder", "Date Done"]]
-            }),
-            new FormField({
-                Name: "Fuel",
-                Type: "number",
-                Value: '',
-                Attributes: [["placeholder", "Fuel in Gallons"]]
-            }),
-            new FormField({
-                Name: "Cost",
-                Type: "number",
-                Value: "",
-                Attributes: [["placeholder", "Cost in Dollars"]]
-            }),
+            new NumberFormField("Mileage", "Total mileage"),
+            new DateFormField("Date", "Purchase Date"),
+            new NumberFormField("Fuel", "Fuel In Gallons"),
+            new NumberFormField("Cost", "Total cost in USD")
         ];
         for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
             var input = inputs_1[_i];
@@ -51,6 +31,19 @@ function Start() {
     // Generate new report
 }
 document.addEventListener("DOMContentLoaded", Start);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var FormField = /** @class */ (function () {
     /**
      * This is form field
@@ -79,4 +72,52 @@ var FormField = /** @class */ (function () {
     };
     return FormField;
 }());
+var NumberFormField = /** @class */ (function (_super) {
+    __extends(NumberFormField, _super);
+    /**
+     * Form field for number type
+     */
+    function NumberFormField(name, placeholder, value, attributes) {
+        if (placeholder === void 0) { placeholder = ""; }
+        if (value === void 0) { value = 0; }
+        if (attributes === void 0) { attributes = new Array(); }
+        var _this = this;
+        if (placeholder) {
+            attributes.push(["placeholder", placeholder]);
+        }
+        var properties = {
+            Name: name,
+            Type: "number",
+            Value: value,
+            Attributes: attributes
+        };
+        _this = _super.call(this, properties) || this;
+        return _this;
+    }
+    return NumberFormField;
+}(FormField));
+var DateFormField = /** @class */ (function (_super) {
+    __extends(DateFormField, _super);
+    /**
+     *Form field for Date types
+     */
+    function DateFormField(name, placeholder, value, attributes) {
+        if (placeholder === void 0) { placeholder = ""; }
+        if (value === void 0) { value = new Date(); }
+        if (attributes === void 0) { attributes = new Array(); }
+        var _this = this;
+        if (placeholder) {
+            attributes.push(["placeholder", placeholder]);
+        }
+        var properties = {
+            Name: name,
+            Type: "date",
+            Value: new Date(),
+            Attributes: attributes
+        };
+        _this = _super.call(this, properties) || this;
+        return _this;
+    }
+    return DateFormField;
+}(FormField));
 //# sourceMappingURL=milage.js.map
