@@ -25,7 +25,25 @@ Let's rewind this scenario and add make my server more strongly typed.
  
 Now in Typescript we could represent this like so:
 ```
-function OrderFood(MealName: string, mealParameters: any) : Food
+function OrderFood(MealName: string, mealParameters: object) : Food
 ```
 We have our function that gives a clear idea of what it complishes. The function requires the name. That I can get from the menu, and the item description, gives me the parameters for the hashbrowns and eggs.
+
+Now this is a very forced example. You're probably thinking, we could use javascript without the types and get similar results, as in;
+```
+function OrderFood(MealName, MealParameters)
+```
+And we sure can. But what happens when I say
+```
+OrderFood("Cheese Burger", ["Over easy", "Hashbrowns"]);
+```
+I gave you an array of strings where you're actually looking for an object with key value pair. 
+
+We're really pulling hairs to make this example work, so lets make this a little more real. 
+
+You're working on a project and your front end dev just handed it off to you. There's a rating system on the page and the front end dev left a function that generates SVGs to show how many stars are clicked on. The function signature looks something like this
+```
+function GenerateRatingStars(rating)
+```
+
 

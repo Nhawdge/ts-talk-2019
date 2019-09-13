@@ -24,6 +24,9 @@ ES5 | 99% | 100%| 100%| 100%|99%
 ES6 |11%| 96% | 98% |98%|99%|
 ES2016+|0%|46%|81%|97%|84%  
 
+
+async/await
+
 ## Your First Typescript App
 
 typescript --init
