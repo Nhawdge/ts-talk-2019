@@ -1,6 +1,8 @@
 # ~~Converting your project to~~ Typescript
 A Introduction to Typescript
 
+https://docs.google.com/presentation/d/13vI8DEe5Ka8XszwndR8__WDfgx178SsiM61u_eY1wg4/edit#slide=id.g63a70d00b1_0_58
+
 ## Table of contents 
 * TypeScript.. Why
 * Your First Typescript App
@@ -55,3 +57,20 @@ compiler assister
 
 ## References
 https://kangax.github.io/compat-table/
+
+Declaration files
+tripleslash directives
+X namespaces
+X classes
+X type inference
+ compiler options
+modules
+decorators
+generics
+symbols
+declaration mergin
+X mixins
+generators
+
+
+Some examples, like Dart, portend that JavaScript has fundamental flaws and to support these scenarios requires a “clean break” from JavaScript in both syntax and runtime. We disagree with this point of view. We believe that with committee participant focus, the standards runtime can be expanded and the syntactic features necessary to support JavaScript at scale can be built upon the existing JavaScript standard.
