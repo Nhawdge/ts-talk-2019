@@ -30,10 +30,6 @@ var Entry = /** @class */ (function () {
         return form;
     };
     Entry.prototype.GetFormValues = function () {
-        // var inputs = (e.target as HTMLFormElement).querySelectorAll("input:not([type=submit])") as NodeListOf<HTMLInputElement>;
-        // var inputArray = [].slice.call(inputs);
-        // var obj = inputArray.reduce((a, c: HTMLInputElement) => a = c.value, {});
-        // console.log(obj);
         var obj = this.Inputs
             .map(function (x) { return { Name: x.Name, Value: x.Value }; })
             .reduce(function (a, c) { a[c.Name] = c.Value; return a; }, {});
@@ -48,6 +44,13 @@ function Start() {
     var entry = new Entry();
     form.appendChild(entry.Render());
     // load from History
+    var reportElem = document.querySelector('#Report');
+    var report = new Report();
+    var data = Database.GetAll(function (data) {
+        console.log("Updating Report", data);
+        report.UpdateData(data);
+        reportElem.appendChild(report.RenderData());
+    });
     // Generate new report
 }
 document.addEventListener("DOMContentLoaded", Start);
@@ -88,8 +91,16 @@ var Database = /** @class */ (function () {
         db.onsuccess = function (event) {
             //(db.transaction as IDBTransaction).objectStore("Milage");
         };
-        //db.results
         return {};
+    };
+    Database.GetAll = function (callback) {
+        var db = this.OpenDB();
+        db.onsuccess = function (event) {
+            var transaction = db.result.transaction(["Mileage"]);
+            var request = transaction.objectStore("Mileage");
+            var data = request.getAll();
+            data.onsuccess = function () { return callback(data.result); };
+        };
     };
     return Database;
 }());
@@ -212,4 +223,34 @@ var SubmitFormField = /** @class */ (function (_super) {
     }
     return SubmitFormField;
 }(FormField));
+var Report = /** @class */ (function () {
+    /**
+     *
+     */
+    function Report() {
+        this.Data = new Array();
+    }
+    Report.prototype.UpdateData = function (data) {
+        this.Data = data;
+        console.log(this.Data);
+    };
+    Report.prototype.RenderData = function () {
+        function renderTd(value) {
+            var cell = document.createElement("td");
+            cell.innerText = value;
+            return cell;
+        }
+        var table = document.createElement("table");
+        for (var _i = 0, _a = this.Data; _i < _a.length; _i++) {
+            var dataRow = _a[_i];
+            var row = document.createElement("tr");
+            row.appendChild(renderTd("a"));
+            row.appendChild(renderTd("a"));
+            row.appendChild(renderTd("a"));
+            table.appendChild(row);
+        }
+        return table;
+    };
+    return Report;
+}());
 //# sourceMappingURL=milage.js.map

@@ -38,14 +38,19 @@ class Database {
 
         db.onsuccess = function (event: Event) {
             //(db.transaction as IDBTransaction).objectStore("Milage");
-
-
         }
-
-
-
-        //db.results
         return {};
+    }
+
+    static GetAll(callback: (data: any) => any): any {
+        var db = this.OpenDB();
+        db.onsuccess = function (event: Event) {
+            var transaction = db.result.transaction(["Mileage"]);
+            var request = transaction.objectStore("Mileage");
+
+            var data = request.getAll();
+            data.onsuccess = () => callback(data.result);
+        }
     }
 }
 
