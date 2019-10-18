@@ -10,6 +10,12 @@ https://docs.google.com/presentation/d/13vI8DEe5Ka8XszwndR8__WDfgx178SsiM61u_eY1
 * Examples
 * Review
 
+# Web Summary
+
+Javascript isn't a pet language anymore and sites have grown in new ways. Typescript will help organize your code and handle problems with clean solutions. Adding great error detection and stronger typing lets you move faster and more accurately through the development process.
+
+In this introduction to using TypeScript, we'll dicuss why it’s great, how to incorporate it into your project, and what you can do with it. Learn all about types, enums, classes, and how to expose errors and typos before the console can. Let's go over the many successes of typescript, what a typescript project can look like, and how your project can be converted to typscript with a lot less effort than you would expect. 
+
 ## TypeScript.. Why
 Better feature support without needing complex build tools
 
