@@ -18,7 +18,7 @@ class Database {
         var db = this.OpenDB();
         db.onsuccess = function () {
             var transaction = db.result.transaction(["Mileage"], "readwrite");
-
+            
             var objectStore = transaction.objectStore("Mileage");
 
             var request = objectStore.add(toAdd);
