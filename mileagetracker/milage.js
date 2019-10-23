@@ -15,8 +15,9 @@ var Entry = /** @class */ (function () {
         ];
         this.FormSubmit = function (e) {
             e.preventDefault();
-            var a = _this.GetFormValues();
-            Database.Save(a);
+            var formValues = _this.GetFormValues();
+            Database.Save(formValues);
+            _this.ClearForm();
             return false;
         };
     }
@@ -33,8 +34,10 @@ var Entry = /** @class */ (function () {
         var obj = this.Inputs
             .map(function (x) { return { Name: x.Name, Value: x.Value }; })
             .reduce(function (a, c) { a[c.Name] = c.Value; return a; }, {});
-        console.log('Got values', obj);
         return obj;
+    };
+    Entry.prototype.ClearForm = function () {
+        this.Inputs.forEach(function (input) { return input.Value = null; });
     };
     return Entry;
 }());
@@ -43,15 +46,12 @@ function Start() {
     var form = document.querySelector('#Entry');
     var entry = new Entry();
     form.appendChild(entry.Render());
-    // load from History
     var reportElem = document.querySelector('#Report');
     var report = new Report();
     var data = Database.GetAll(function (data) {
-        console.log("Updating Report", data);
         report.UpdateData(data);
         reportElem.appendChild(report.RenderData());
     });
-    // Generate new report
 }
 document.addEventListener("DOMContentLoaded", Start);
 var Database = /** @class */ (function () {
@@ -86,13 +86,6 @@ var Database = /** @class */ (function () {
             };
         };
     };
-    Database.Get = function () {
-        var db = this.OpenDB();
-        db.onsuccess = function (event) {
-            //(db.transaction as IDBTransaction).objectStore("Milage");
-        };
-        return {};
-    };
     Database.GetAll = function (callback) {
         var db = this.OpenDB();
         db.onsuccess = function (event) {
@@ -122,15 +115,16 @@ var FormField = /** @class */ (function () {
      * This is an abstract form field
      */
     function FormField(input) {
+        var _this = this;
         this.HasLabel = true;
+        this.Bind = function (e) {
+            _this.Value = e.target.value;
+        };
         this.Name = input.Name;
         this.Type = input.Type;
         this.Value = input.Value || 0;
         this.Attributes = input.Attributes;
     }
-    FormField.prototype.Bind = function (e) {
-        this.Value = e.target.value;
-    };
     FormField.prototype.Render = function () {
         var group = document.createElement('fieldset');
         if (this.HasLabel) {
@@ -241,14 +235,26 @@ var Report = /** @class */ (function () {
             return cell;
         }
         var table = document.createElement("table");
+        var header = document.createElement("thead");
+        var headerRow = document.createElement("tr");
+        headerRow.appendChild(renderTd("Date"));
+        headerRow.appendChild(renderTd("Mileage"));
+        headerRow.appendChild(renderTd("Cost"));
+        headerRow.appendChild(renderTd("Fuel"));
+        header.appendChild(headerRow);
+        var body = document.createElement("tbody");
         for (var _i = 0, _a = this.Data; _i < _a.length; _i++) {
             var dataRow = _a[_i];
+            console.log(dataRow);
             var row = document.createElement("tr");
-            row.appendChild(renderTd("a"));
-            row.appendChild(renderTd("a"));
-            row.appendChild(renderTd("a"));
-            table.appendChild(row);
+            row.appendChild(renderTd(dataRow.Date.toString()));
+            row.appendChild(renderTd(dataRow.Mileage.toString()));
+            row.appendChild(renderTd(dataRow.Cost.toString()));
+            row.appendChild(renderTd(dataRow.Fuel.toString()));
+            body.appendChild(row);
         }
+        table.appendChild(header);
+        table.appendChild(body);
         return table;
     };
     return Report;

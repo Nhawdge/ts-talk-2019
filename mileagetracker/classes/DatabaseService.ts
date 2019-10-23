@@ -33,15 +33,6 @@ class Database {
         }
 
     }
-    static Get(): object {
-        var db = this.OpenDB();
-
-        db.onsuccess = function (event: Event) {
-            //(db.transaction as IDBTransaction).objectStore("Milage");
-        }
-        return {};
-    }
-
     static GetAll(callback: (data: any) => any): any {
         var db = this.OpenDB();
         db.onsuccess = function (event: Event) {
@@ -50,17 +41,8 @@ class Database {
 
             var data = request.getAll();
             data.onsuccess = () => callback(data.result);
-        }
+        }   
     }
 }
 
 
-interface DatabaseTable {
-    Name: string;
-    Columns: Array<DatabaseColumn>;
-}
-
-interface DatabaseColumn {
-    Name: string;
-    Key: string;
-}

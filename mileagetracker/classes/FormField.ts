@@ -15,7 +15,7 @@ abstract class FormField {
         this.Attributes = input.Attributes
     }
 
-    Bind(e: Event) {
+    Bind = (e: Event) => {
         this.Value = (e.target as HTMLInputElement).value;
     }
 

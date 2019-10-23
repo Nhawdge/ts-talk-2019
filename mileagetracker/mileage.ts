@@ -26,16 +26,19 @@ class Entry {
         var obj = this.Inputs
             .map(x => { return { Name: x.Name, Value: x.Value } })
             .reduce((a: any, c) => { a[c.Name] = c.Value; return a; }, {})
-        console.log('Got values', obj)
         return obj
     }
-
+    ClearForm(): void {
+        this.Inputs.forEach(input => input.Value = null);
+    }
 
     FormSubmit = (e: Event): boolean => {
         e.preventDefault();
-        var a = this.GetFormValues();
+        var formValues = this.GetFormValues();
 
-        Database.Save(a);
+        Database.Save(formValues)
+        this.ClearForm();
+
         return false;
     }
 }
@@ -45,20 +48,15 @@ function Start(): void {
     var form = document.querySelector('#Entry') as HTMLElement;
     var entry = new Entry();
     form.appendChild(entry.Render())
-    
-    // load from History
+
     var reportElem = document.querySelector('#Report') as HTMLElement;
     var report = new Report();
-    
+
     var data = Database.GetAll(data => {
-        console.log("Updating Report", data)
 
         report.UpdateData(data);
         reportElem.appendChild(report.RenderData())
     });
-    
-
-    // Generate new report
 }
 
 document.addEventListener("DOMContentLoaded", Start);

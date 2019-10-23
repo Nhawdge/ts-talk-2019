@@ -9,7 +9,7 @@ header {
     color: rgba(0, 0, 0, .7);
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 800px) {
     body {
         margin: auto;
         width: 1000px;
@@ -25,7 +25,7 @@ header {
     }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 799px) {
     main {
         display: grid;
         grid-template-columns: 1fr;
@@ -41,10 +41,27 @@ header {
 
 section {
     grid-column: auto;
+    margin: 5px;
 }
 
 form fieldset {
     display: grid;
     grid-template-rows: 1fr;
     border: none;
+}
+
+table {
+    width: 100%;
+    margin: 10px;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, .2  );
+}
+thead td {
+    border-bottom: 1px solid black  ;
+  }
+
+td {
+    padding: 8px;
 }
