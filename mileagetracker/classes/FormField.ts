@@ -3,6 +3,8 @@ abstract class FormField {
     Type: string;
     Value: any;
     Attributes: Array<[string, string]>;
+    // TODO Part 3
+    // Lets add some somewhat important feature.
     HasLabel = true;
 
     /**
@@ -75,14 +77,15 @@ class DateFormField extends FormField {
     }
 }
 
+// TODO Part 1
+// Can't submit without a submit button.
 class SubmitFormField extends FormField {
     /**
      * Submit button
      */
     constructor(name: string, attributes: Array<[string, string]> = new Array<[string, string]>()) {
-        // if (placeholder) {
-        //     attributes.push(["placeholder", placeholder])
-        // }
+        // TODO Part 2
+        // Notice the properties we don't need?
         var properties = {
             Name: name,
             Type: "submit",

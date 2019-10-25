@@ -7,6 +7,8 @@ class Entry {
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
         
+        // TODO Part 4
+        // What happened to my 5 lines per field?!?!?!
         var inputs = [
             new NumberFormField("Mileage", "Total mileage"),
             new DateFormField("Date", "Purchase Date"),
