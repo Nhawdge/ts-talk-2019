@@ -1,3 +1,5 @@
+// TODO Part 1
+// Model our form field.
 class FormField {
     Name: string;
     Type: any;
@@ -14,6 +16,8 @@ class FormField {
         this.Attributes = input.Attributes
     }
 
+    // TODO Part 3
+    // I know what you're thinking. Why not?!
     Render(): HTMLElement {
         let group = document.createElement('fieldset') as HTMLFieldSetElement;
         let labelElem = document.createElement('label');
@@ -39,7 +43,8 @@ class Entry {
 
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
-
+        // TODO Part 3
+        // This is the first form field for our milage.
         var inputs = [new FormField({
             Name: "Mileage",
             Type: Number,
@@ -50,10 +55,8 @@ class Entry {
         for (let input of inputs) {
             let inputElem = document.createElement('input');
             inputElem.type = "number";
-            //inputElem.value =
 
             let labelElem = document.createElement('label');
-            //labelElem.innerText = input;
 
             form.appendChild(labelElem);
             form.appendChild(inputElem);
