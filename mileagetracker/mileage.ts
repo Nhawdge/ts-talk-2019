@@ -41,12 +41,14 @@ class Entry {
 
     Render(): HTMLElement {
         var form = document.createElement("form") as HTMLFormElement;
-
+// TODO Part 1
+// Lets go all in on this input as an object idea.
+// Who doesn't like typing this
         var inputs = [
             new FormField({
                 Name: "Mileage",
                 Type: "number",
-                Value: null,    
+                Value: null,
                 Attributes: [["placeholder", "Total current milage"]]
             }),
             new FormField({
