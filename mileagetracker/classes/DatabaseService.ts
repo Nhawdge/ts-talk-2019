@@ -1,5 +1,9 @@
 class Database {
+    // TODO Part 1
+    // Static X.... solve for X
     static OpenDB(): IDBOpenDBRequest {
+        // TODO Part 2
+        // Wouldn't it be great to abstract this into a nice little JS file for working with indexDB?
         var db = window.indexedDB.open("mileage-tracker")
 
         db.onupgradeneeded = function (event: Event) {
@@ -15,6 +19,8 @@ class Database {
         return db;
     }
     static Save(toAdd: any): boolean {
+        // TODO Part 3
+        // Let's Abstract our connection
         var db = this.OpenDB();
         db.onsuccess = function () {
 
@@ -23,6 +29,8 @@ class Database {
             var objectStore = transaction.objectStore("Mileage");
 
             var request = objectStore.add(toAdd);
+            // TODO Part 4
+            // Welcome to call backs
             request.onsuccess = function (event: Event) {
                 console.log("Save successful");
             }
@@ -33,25 +41,8 @@ class Database {
         var db = this.OpenDB();
 
         db.onsuccess = function (event: Event) {
-            //(db.transaction as IDBTransaction).objectStore("Milage");
-
-
+            // I've got enough place holders for a dinner party!
         }
-
-
-
-        //db.results
         return {};
     }
-}
-
-
-interface DatabaseTable {
-    Name: string;
-    Columns: Array<DatabaseColumn>;
-}
-
-interface DatabaseColumn {
-    Name: string;
-    Key: string;
 }
