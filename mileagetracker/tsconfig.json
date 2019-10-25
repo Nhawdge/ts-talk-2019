@@ -10,7 +10,8 @@
       "rootDir": "./",
       "strict": true,
       "esModuleInterop": true
-    },
+    }, // TODO Part 5
+       //  Whoa did we change the tsconfig?
     "include": [
       "./**/*.ts"
     ]

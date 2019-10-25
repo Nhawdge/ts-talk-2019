@@ -1,3 +1,6 @@
+// TODO Part 2
+// New file! YAY Code organization.
+
 class FormField {
     Name: string;
     Type: string;
@@ -15,6 +18,9 @@ class FormField {
     }
 
     Render(): HTMLElement {
+        // TODO Part 3
+        // Field set needs using casting (not one that requires it)
+        // Needed because of type to 'feldset'
         let group = document.createElement('fieldset') as HTMLFieldSetElement;
         let labelElem = document.createElement('label');
         labelElem.innerHTML = this.Name;
@@ -26,6 +32,8 @@ class FormField {
             inputElem.value = this.Value;
         }
 
+        // TODO Part 4
+        // Code golf! IN A TUTORIAL?!?!?!
         this.Attributes.forEach(x => inputElem.setAttribute(x[0], x[1]));
 
         //labelElem.innerText = input;
