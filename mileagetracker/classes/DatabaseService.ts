@@ -17,11 +17,15 @@ class Database {
     static Save(toAdd: any): void {
         var db = this.OpenDB();
         db.onsuccess = function () {
+            // TODO Part 5
+            // What is this mess and why does it work?
             var transaction = db.result.transaction(["Mileage"], "readwrite");
 
             var objectStore = transaction.objectStore("Mileage");
 
             var request = objectStore.add(toAdd);
+            // TODO Part 6
+            // How come I never got this many call backs on my dating profile?
             request.onsuccess = function (event: Event) {
                 console.log("Save successful");
                 return true;
@@ -37,25 +41,9 @@ class Database {
         var db = this.OpenDB();
 
         db.onsuccess = function (event: Event) {
-            //(db.transaction as IDBTransaction).objectStore("Milage");
-
-
         }
-
-
-
-        //db.results
+        // TODO 7
+        // We'll get here, I promise.
         return {};
     }
-}
-
-
-interface DatabaseTable {
-    Name: string;
-    Columns: Array<DatabaseColumn>;
-}
-
-interface DatabaseColumn {
-    Name: string;
-    Key: string;
 }

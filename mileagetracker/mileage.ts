@@ -23,10 +23,9 @@ class Entry {
     }
 
     GetFormValues(): object {
-        // var inputs = (e.target as HTMLFormElement).querySelectorAll("input:not([type=submit])") as NodeListOf<HTMLInputElement>;
-        // var inputArray = [].slice.call(inputs);
-        // var obj = inputArray.reduce((a, c: HTMLInputElement) => a = c.value, {});
-        // console.log(obj);
+        // TODO Part 1
+        // We needed to solve a problem of getting the inputs once the've been rendered.
+        // Stop code g̩̞͍̮͢o͙̱͡l̨̘̫̹̼f̩̖̩̹̺ͅi̶̪̩͖n̸g̯̟̣̗̼̮̰ ̟t͙u̬̱̬͍t͈̥̣͉̣o̪̘͟r͙͎i̙̩̞à̩l̶̹̪s̷͖̱͉
         var obj = this.Inputs
             .map(x => { return { Name: x.Name, Value: x.Value } })
             .reduce((a: any, c) => { a[c.Name] = c.Value; return a; }, {})
@@ -34,13 +33,11 @@ class Entry {
         return obj
     }
 
-
+    // TODO Part 4
+    // Arrow functions preserve `this` in Classes
     FormSubmit = (e: Event): boolean => {
         e.preventDefault();
         var a = this.GetFormValues();
-
-
-
         Database.Save(a);
         return false;
     }

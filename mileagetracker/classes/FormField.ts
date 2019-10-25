@@ -6,7 +6,7 @@ abstract class FormField {
     HasLabel = true;
 
     /**
-     * This is an abstract form field  
+     * This is an abstract form field
      */
     constructor(input: any) {
         this.Name = input.Name;
@@ -15,6 +15,9 @@ abstract class FormField {
         this.Attributes = input.Attributes
     }
 
+    // TODO Part 2
+    // Build a bind event to update
+    // also magic missile
     Bind(e: Event) {
         this.Value = (e.target as HTMLInputElement).value;
     }
@@ -33,6 +36,8 @@ abstract class FormField {
         if (this.Value) {
             inputElem.value = this.Value;
         }
+        // TODO Part 3
+        // Actually bind the event
         inputElem.onchange = this.Bind;
         this.Attributes.forEach(x => inputElem.setAttribute(x[0], x[1]));
 
