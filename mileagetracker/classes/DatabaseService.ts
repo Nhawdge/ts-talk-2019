@@ -18,7 +18,7 @@ class Database {
         var db = this.OpenDB();
         db.onsuccess = function () {
             var transaction = db.result.transaction(["Mileage"], "readwrite");
-            
+
             var objectStore = transaction.objectStore("Mileage");
 
             var request = objectStore.add(toAdd);
@@ -33,15 +33,18 @@ class Database {
         }
 
     }
-    static GetAll(callback: (data: any) => any): any {
-        var db = this.OpenDB();
-        db.onsuccess = function (event: Event) {
-            var transaction = db.result.transaction(["Mileage"]);
-            var request = transaction.objectStore("Mileage");
+    static GetAll = async (): Promise<object> => {
+        return new Promise<object>(function (resolve: Function) {
 
-            var data = request.getAll();
-            data.onsuccess = () => callback(data.result);
-        }   
+            var db = Database.OpenDB();
+            db.onsuccess = function (event: Event) {
+                var transaction = db.result.transaction(["Mileage"]);
+                var request = transaction.objectStore("Mileage");
+
+                var data = request.getAll();
+                data.onsuccess = () => resolve(data.result);
+            }
+        })
     }
 }
 

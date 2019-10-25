@@ -52,11 +52,12 @@ function Start(): void {
     var reportElem = document.querySelector('#Report') as HTMLElement;
     var report = new Report();
 
-    var data = Database.GetAll(data => {
+    var data = Database.GetAll().then(
+        function (data: MileageRow[]) {
+            report.UpdateData(data);
+            reportElem.appendChild(report.RenderData())
+        });
 
-        report.UpdateData(data);
-        reportElem.appendChild(report.RenderData())
-    });
 }
 
 document.addEventListener("DOMContentLoaded", Start);
