@@ -1,4 +1,5 @@
-
+ // TODO Part 4
+ // Model our entry for the database
 class Entry {
     Mileage = 0;
     Date = new Date();
@@ -26,6 +27,8 @@ class Entry {
     }
 }
 
+// TODO Part 3
+// Create a start point for our app. 
 function Start(): void {
     console.log("Start");
     var form = document.querySelector('#Entry') as HTMLElement;
