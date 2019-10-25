@@ -50,6 +50,8 @@ function Start(): void {
     var reportElem = document.querySelector('#Report') as HTMLElement;
     var report = new Report();
     
+    // TODO Part 7
+    // Wev'e got data! Call back isn't spectacular.
     var data = Database.GetAll(data => {
         console.log("Updating Report", data)
 

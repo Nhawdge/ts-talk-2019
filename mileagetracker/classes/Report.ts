@@ -1,8 +1,11 @@
+// TODO Part 4
+// Hey a new class!
+
 class Report {
     Data: Array<object>;
 
     /**
-     *
+     * Report!
      */
     constructor() {
         this.Data = new Array<Object>();
@@ -14,12 +17,16 @@ class Report {
     }
 
     RenderData(): HTMLElement {
+        // TODO Part 5
+        // Little helper function in a class's method
         function renderTd(value: string): HTMLElement {
             let cell = document.createElement("td");
             cell.innerText = value;
             return cell;
         }
 
+        // TODO Part 6
+        // Typescript _knows_
         var table = document.createElement("table");
 
         for (let dataRow of this.Data) {

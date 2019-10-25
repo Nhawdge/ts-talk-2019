@@ -41,26 +41,20 @@ class Database {
         }
         return {};
     }
-
+    // TODO Part 1
+    // Call back notation in an argument
     static GetAll(callback: (data: any) => any): any {
         var db = this.OpenDB();
+        // TODO Part 2
+        // Whoa a working get all function!
         db.onsuccess = function (event: Event) {
             var transaction = db.result.transaction(["Mileage"]);
             var request = transaction.objectStore("Mileage");
 
             var data = request.getAll();
+            // TODO Part 3
+            // Nesting call backs is rough.
             data.onsuccess = () => callback(data.result);
         }
     }
-}
-
-
-interface DatabaseTable {
-    Name: string;
-    Columns: Array<DatabaseColumn>;
-}
-
-interface DatabaseColumn {
-    Name: string;
-    Key: string;
 }
