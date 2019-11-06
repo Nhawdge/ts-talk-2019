@@ -1,46 +1,4 @@
 "use strict";
-var Entry = /** @class */ (function () {
-    function Entry() {
-        var _this = this;
-        this.Mileage = 0;
-        this.Date = new Date();
-        this.Fuel = 0;
-        this.TotalCost = 0;
-        this.Inputs = [
-            new NumberFormField("Mileage", "Total mileage"),
-            new DateFormField("Date", "Purchase Date"),
-            new NumberFormField("Fuel", "Fuel In Gallons"),
-            new NumberFormField("Cost", "Total cost in USD"),
-            new SubmitFormField("Submit")
-        ];
-        this.FormSubmit = function (e) {
-            e.preventDefault();
-            var formValues = _this.GetFormValues();
-            Database.Save(formValues);
-            _this.ClearForm();
-            return false;
-        };
-    }
-    Entry.prototype.Render = function () {
-        var form = document.createElement("form");
-        for (var _i = 0, _a = this.Inputs; _i < _a.length; _i++) {
-            var input = _a[_i];
-            form.appendChild(input.Render());
-        }
-        form.onsubmit = this.FormSubmit;
-        return form;
-    };
-    Entry.prototype.GetFormValues = function () {
-        var obj = this.Inputs
-            .map(function (x) { return { Name: x.Name, Value: x.Value }; })
-            .reduce(function (a, c) { a[c.Name] = c.Value; return a; }, {});
-        return obj;
-    };
-    Entry.prototype.ClearForm = function () {
-        this.Inputs.forEach(function (input) { return input.Value = null; });
-    };
-    return Entry;
-}());
 function Start() {
     console.log("Start");
     var form = document.querySelector('#Entry');
@@ -48,17 +6,17 @@ function Start() {
     form.appendChild(entry.Render());
     var reportElem = document.querySelector('#Report');
     var report = new Report();
-    var data = Database.GetAll(function (data) {
+    Database.GetAll(function (data) {
         report.UpdateData(data);
         reportElem.appendChild(report.RenderData());
     });
 }
 document.addEventListener("DOMContentLoaded", Start);
-var Database = /** @class */ (function () {
+var Database = (function () {
     function Database() {
     }
     Database.OpenDB = function () {
-        var db = window.indexedDB.open("mileage-tracker");
+        var db = window.indexedDB.open(this.DataBaseName);
         db.onupgradeneeded = function (event) {
             var db = event.target.result;
             console.log("Generating DB", db);
@@ -95,7 +53,53 @@ var Database = /** @class */ (function () {
             data.onsuccess = function () { return callback(data.result); };
         };
     };
+    Database.DataBaseName = "mileage-tracker";
     return Database;
+}());
+var Entry = (function () {
+    function Entry() {
+        var _this = this;
+        this.Mileage = 0;
+        this.Date = new Date();
+        this.Fuel = 0;
+        this.TotalCost = 0;
+        this.Inputs = [
+            new NumberFormField("Mileage", "Total mileage"),
+            new DateFormField("Date", "Purchase Date"),
+            new NumberFormField("Fuel", "Fuel In Gallons"),
+            new NumberFormField("Cost", "Total cost in USD"),
+            new SubmitFormField("Submit")
+        ];
+        this.GetFormValues = function () {
+            var obj = _this.Inputs
+                .map(function (input) { return { Name: input.Name, Value: input.Value }; })
+                .reduce(function (accumulator, currentValue) {
+                accumulator[currentValue.Name] = currentValue.Value;
+                return accumulator;
+            }, {});
+            return obj;
+        };
+        this.FormSubmit = function (e) {
+            e.preventDefault();
+            var formValues = _this.GetFormValues();
+            Database.Save(formValues);
+            _this.ClearForm();
+            return false;
+        };
+    }
+    Entry.prototype.Render = function () {
+        var form = document.createElement("form");
+        for (var _i = 0, _a = this.Inputs; _i < _a.length; _i++) {
+            var input = _a[_i];
+            form.appendChild(input.Render());
+        }
+        form.onsubmit = this.FormSubmit;
+        return form;
+    };
+    Entry.prototype.ClearForm = function () {
+        this.Inputs.forEach(function (input) { return input.Value = null; });
+    };
+    return Entry;
 }());
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -110,10 +114,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var FormField = /** @class */ (function () {
-    /**
-     * This is an abstract form field
-     */
+var FormField = (function () {
     function FormField(input) {
         var _this = this;
         this.HasLabel = true;
@@ -145,11 +146,8 @@ var FormField = /** @class */ (function () {
     };
     return FormField;
 }());
-var NumberFormField = /** @class */ (function (_super) {
+var NumberFormField = (function (_super) {
     __extends(NumberFormField, _super);
-    /**
-     * Form field for number type
-     */
     function NumberFormField(name, placeholder, value, attributes) {
         if (placeholder === void 0) { placeholder = ""; }
         if (value === void 0) { value = 0; }
@@ -169,11 +167,8 @@ var NumberFormField = /** @class */ (function (_super) {
     }
     return NumberFormField;
 }(FormField));
-var DateFormField = /** @class */ (function (_super) {
+var DateFormField = (function (_super) {
     __extends(DateFormField, _super);
-    /**
-     *Form field for Date types
-     */
     function DateFormField(name, placeholder, date, attributes) {
         if (placeholder === void 0) { placeholder = ""; }
         if (date === void 0) { date = new Date(); }
@@ -194,17 +189,11 @@ var DateFormField = /** @class */ (function (_super) {
     }
     return DateFormField;
 }(FormField));
-var SubmitFormField = /** @class */ (function (_super) {
+var SubmitFormField = (function (_super) {
     __extends(SubmitFormField, _super);
-    /**
-     * Submit button
-     */
     function SubmitFormField(name, attributes) {
         if (attributes === void 0) { attributes = new Array(); }
         var _this = this;
-        // if (placeholder) {
-        //     attributes.push(["placeholder", placeholder])
-        // }
         var properties = {
             Name: name,
             Type: "submit",
@@ -217,10 +206,7 @@ var SubmitFormField = /** @class */ (function (_super) {
     }
     return SubmitFormField;
 }(FormField));
-var Report = /** @class */ (function () {
-    /**
-     *
-     */
+var Report = (function () {
     function Report() {
         this.Data = new Array();
     }

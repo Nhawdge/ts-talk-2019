@@ -2,7 +2,7 @@ class Report {
     Data: Array<MileageRow>;
 
     /**
-     *
+     * Creates a new report class.
      */
     constructor() {
         this.Data = new Array<MileageRow>();

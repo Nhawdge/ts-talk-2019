@@ -52,7 +52,7 @@ class NumberFormField extends FormField {
         }
         var properties = {
             Name: name,
-            Type: "number",
+            Type: "number", 
             Value: value,
             Attributes: attributes
         }
@@ -84,9 +84,6 @@ class SubmitFormField extends FormField {
      * Submit button
      */
     constructor(name: string, attributes: Array<[string, string]> = new Array<[string, string]>()) {
-        // if (placeholder) {
-        //     attributes.push(["placeholder", placeholder])
-        // }
         var properties = {
             Name: name,
             Type: "submit",

@@ -1,6 +1,10 @@
 class Database {
+    // TODO 3
+    // Static Types
+    // Index DB Overview
+    static DataBaseName = "mileage-tracker";
     static OpenDB(): IDBOpenDBRequest {
-        var db = window.indexedDB.open("mileage-tracker")
+        var db = window.indexedDB.open(this.DataBaseName)
 
         db.onupgradeneeded = function (event: Event) {
             var db = (event.target as IDBOpenDBRequest).result;
@@ -14,11 +18,11 @@ class Database {
         }
         return db;
     }
+
     static Save(toAdd: any): void {
         var db = this.OpenDB();
         db.onsuccess = function () {
             var transaction = db.result.transaction(["Mileage"], "readwrite");
-            
             var objectStore = transaction.objectStore("Mileage");
 
             var request = objectStore.add(toAdd);
@@ -31,8 +35,8 @@ class Database {
                 return false;
             }
         }
-
     }
+
     static GetAll(callback: (data: any) => any): any {
         var db = this.OpenDB();
         db.onsuccess = function (event: Event) {
