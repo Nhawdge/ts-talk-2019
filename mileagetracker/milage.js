@@ -231,7 +231,6 @@ var Report = (function () {
         var body = document.createElement("tbody");
         for (var _i = 0, _a = this.Data; _i < _a.length; _i++) {
             var dataRow = _a[_i];
-            console.log(dataRow);
             var row = document.createElement("tr");
             row.appendChild(renderTd(dataRow.Date.toString()));
             row.appendChild(renderTd(dataRow.Mileage.toString()));

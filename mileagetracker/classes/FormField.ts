@@ -1,3 +1,11 @@
+// TODO 4
+/*
+    Abstraction
+    Inheritance
+    Overriding properties
+    Optional Parameters
+    Default Parameters
+*/
 abstract class FormField {
     Name: string;
     Type: string;
@@ -6,7 +14,7 @@ abstract class FormField {
     HasLabel = true;
 
     /**
-     * This is an abstract form field  
+     * This is an abstract form field
      */
     constructor(input: any) {
         this.Name = input.Name;
@@ -40,7 +48,6 @@ abstract class FormField {
         return group;
     }
 }
-
 
 class NumberFormField extends FormField {
     /**

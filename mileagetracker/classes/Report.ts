@@ -1,3 +1,8 @@
+// TODO 5
+/*
+    Interfaces
+    Duck Typing
+ */
 class Report {
     Data: Array<MileageRow>;
 
@@ -23,25 +28,24 @@ class Report {
         var table = document.createElement("table");
         let header = document.createElement("thead");
         let headerRow = document.createElement("tr")
-        
-        
+
+
         headerRow.appendChild(renderTd("Date"));
         headerRow.appendChild(renderTd("Mileage"));
         headerRow.appendChild(renderTd("Cost"));
         headerRow.appendChild(renderTd("Fuel"));
-        
+
         header.appendChild(headerRow);
         let body = document.createElement("tbody");
-        
+
         for (let dataRow of this.Data) {
-            console.log(dataRow);
             let row = document.createElement("tr");
-            
+
             row.appendChild(renderTd(dataRow.Date.toString()));
             row.appendChild(renderTd(dataRow.Mileage.toString()));
             row.appendChild(renderTd(dataRow.Cost.toString()));
             row.appendChild(renderTd(dataRow.Fuel.toString()));
-            
+
             body.appendChild(row);
         }
         table.appendChild(header);
@@ -55,4 +59,11 @@ interface MileageRow {
     Date: Date
     Fuel: number
     Mileage: number
+}
+
+// Duck typing example
+
+interface Car {
+    Cost: number;
+    Mileage: number;
 }
